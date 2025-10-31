@@ -1,0 +1,219 @@
+/* Структура для фиксированного футера */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+/* Основной стиль */
+body {
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: 0.3s;
+}
+
+:root {
+  --bg: #f7f7f7;
+  --card: #fff;
+  --text: #222;
+  --accent: #e0e0e0;
+}
+
+body.dark {
+  --bg: #121212;
+  --card: #1e1e1e;
+  --text: #f5f5f5;
+  --accent: #2a2a2a;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: var(--card);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+#themeToggle {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+/* Контент */
+main {
+  padding: 1.5rem;
+  max-width: 700px;
+  margin: auto;
+}
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--card);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.task-form input {
+  padding: 0.7rem;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.task-form button {
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.task-form button:hover {
+  opacity: 0.8;
+}
+
+/* Список задач */
+.task-list {
+  margin-top: 1.5rem;
+}
+
+.stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  background: var(--card);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  transition: 0.3s;
+
+  /* ✅ Фиксированный размер */
+  width: 100%;
+  height: 150px; /* одинаковая высота на ПК */
+  box-sizing: border-box;
+  overflow: hidden; /* обрезает всё, что не помещается */
+}
+
+li.done h3 {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.info {
+  flex: 1;
+  min-width: 200px;
+}
+
+.date {
+  display: block;
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+.buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.buttons button {
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  padding: 6px 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: 0.2s;
+}
+
+.buttons button:hover {
+  opacity: 0.7;
+}
+
+/* 📱 Мобильная версия */
+@media (max-width: 600px) {
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  main {
+    padding: 1rem;
+  }
+
+  li {
+    flex-direction: column;
+    align-items: flex-start;
+    height: 130px; /* одинаковая высота на телефоне */
+  }
+
+
+  .buttons {
+    margin-top: 8px;
+  }
+
+  .stats span {
+    font-size: 0.85rem;
+  }
+}
+
+/* Футер */
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: gray;
+  background: var(--card);
+  border-top: 1px solid var(--accent);
+  margin-top: auto;
+}
+
+.info p {
+  word-wrap: break-word;
+  white-space: normal;
+}

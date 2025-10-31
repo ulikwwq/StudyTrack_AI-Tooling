@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyTrack</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-wrapper">
+    <header>
+      <h1>StudyTrack</h1>
+      <button id="themeToggle">🌙</button>
+    </header>
+
+    <main>
+      <section class="task-form">
+        <h2>Добавить задание</h2>
+        <input id="subjectInput" type="text" placeholder="Название предмета" />
+        <input id="descInput" type="text" placeholder="Описание задания" />
+        <button id="addTask">Добавить</button>
+      </section>
+
+      <section class="task-list">
+        <h2>Мои задания</h2>
+        <div class="stats">
+          <span id="totalTasks">Всего: 0</span>
+          <span id="doneTasks">Выполнено: 0</span>
+          <span id="pendingTasks">Осталось: 0</span>
+        </div>
+        <ul id="myTasks"></ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 StudyTrack — by <b>ulkwwq</b></p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const subjectInput = document.getElementById('subjectInput');
+    const descInput = document.getElementById('descInput');
+    const addTaskBtn = document.getElementById('addTask');
+    const myTasks = document.getElementById('myTasks');
+    const totalTasks = document.getElementById('totalTasks');
+    const doneTasks = document.getElementById('doneTasks');
+    const pendingTasks = document.getElementById('pendingTasks');
+
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    let theme = localStorage.getItem('theme') || 'light';
+    document.body.className = theme;
+
+    themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+    themeToggle.addEventListener('click', () => {
+      theme = theme === 'light' ? 'dark' : 'light';
+      document.body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    });
+
+    addTaskBtn.addEventListener('click', () => {
+      const subject = subjectInput.value.trim();
+      const desc = descInput.value.trim();
+      if (!subject || !desc) return alert('Заполни оба поля!');
+      const now = new Date().toLocaleString();
+      tasks.push({ subject, desc, done: false, created: now, updated: null });
+      saveTasks();
+      subjectInput.value = '';
+      descInput.value = '';
+    });
+
+    function saveTasks() {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      renderTasks();
+    }
+
+    function renderTasks() {
+      myTasks.innerHTML = '';
+      tasks.forEach((t, index) => {
+        const li = document.createElement('li');
+        li.className = t.done ? 'done' : '';
+
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'info';
+        const subjectEl = document.createElement('h3');
+        subjectEl.textContent = t.subject;
+        const descEl = document.createElement('p');
+        descEl.textContent = t.desc;
+
+        const dateEl = document.createElement('span');
+        dateEl.className = 'date';
+        dateEl.textContent = t.updated
+          ? `Изменено: ${t.updated}`
+          : `Добавлено: ${t.created}`;
+
+        infoDiv.append(subjectEl, descEl, dateEl);
+
+        const btnsDiv = document.createElement('div');
+        btnsDiv.className = 'buttons';
+        const doneBtn = document.createElement('button');
+        doneBtn.textContent = t.done ? '⟳' : '✔️';
+        const editBtn = document.createElement('button');
+        editBtn.textContent = '✏️';
+        const delBtn = document.createElement('button');
+        delBtn.textContent = '🗑️';
+
+        doneBtn.addEventListener('click', () => {
+          t.done = !t.done;
+          saveTasks();
+        });
+
+        editBtn.addEventListener('click', () => {
+          const newDesc = prompt('Измени описание:', t.desc);
+          if (newDesc !== null) {
+            t.desc = newDesc;
+            t.updated = new Date().toLocaleString();
+            saveTasks();
+          }
+        });
+
+        delBtn.addEventListener('click', () => {
+          tasks.splice(index, 1);
+          saveTasks();
+        });
+
+        btnsDiv.append(doneBtn, editBtn, delBtn);
+        li.append(infoDiv, btnsDiv);
+        myTasks.appendChild(li);
+      });
+
+      totalTasks.textContent = `Всего: ${tasks.length}`;
+      doneTasks.textContent = `Выполнено: ${tasks.filter(t => t.done).length}`;
+      pendingTasks.textContent = `Осталось: ${tasks.filter(t => !t.done).length}`;
+    }
+
+    Sortable.create(myTasks, {
+      animation: 150,
+      onEnd(evt) {
+        const moved = tasks.splice(evt.oldIndex, 1)[0];
+        tasks.splice(evt.newIndex, 0, moved);
+        saveTasks();
+      }
+    });
+
+    renderTasks();
+  </script>
+</body>
+</html>
