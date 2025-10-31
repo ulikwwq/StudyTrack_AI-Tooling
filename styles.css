@@ -131,13 +131,12 @@ li {
   flex-wrap: wrap;
   transition: 0.3s;
 
-  /* ✅ Фиксированный размер */
+  /* Единый размер по высоте, но гибкий */
   width: 100%;
-  height: 150px; /* одинаковая высота на ПК */
+  min-height: 150px; /* базовый размер на ПК */
   box-sizing: border-box;
-  overflow: hidden; /* обрезает всё, что не помещается */
+  overflow: hidden;
 }
-
 li.done h3 {
   text-decoration: line-through;
   opacity: 0.6;
@@ -189,7 +188,7 @@ li.done h3 {
   li {
     flex-direction: column;
     align-items: flex-start;
-    height: 130px; /* одинаковая высота на телефоне */
+    min-height: 130px; /* базовый размер на телефоне */
   }
 
 
@@ -213,7 +212,3 @@ footer {
   margin-top: auto;
 }
 
-.info p {
-  word-wrap: break-word;
-  white-space: normal;
-}

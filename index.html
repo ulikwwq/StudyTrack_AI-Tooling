@@ -135,6 +135,7 @@
       pendingTasks.textContent = `Осталось: ${tasks.filter(t => !t.done).length}`;
     }
 
+    // Drag & drop
     Sortable.create(myTasks, {
       animation: 150,
       onEnd(evt) {
