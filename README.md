@@ -28,7 +28,7 @@ StudyTrack/
 
 Скачай проект или клонируй репозиторий:
 
-git clone https://github.com/username/StudyTrack.git
+git clone https://github.com/ulikwwq/StudyTrack.git
 
 
 Открой файл index.html в браузере (дважды кликни).
