@@ -66,8 +66,11 @@ main {
   padding: 1.5rem;
   max-width: 700px;
   margin: auto;
+  /* Для мобильных: добавим отступ снизу, чтобы футер не перекрывал задачи */
+  padding-bottom: 80px;
 }
 
+/* Короткая форма добавления задания, но с переносом текста */
 .task-form {
   display: flex;
   flex-direction: column;
@@ -76,6 +79,11 @@ main {
   padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  max-width: 340px;
+  min-height: 200px;
+  max-height: 280px;
+  position: relative;
+  margin-bottom: 24px; /* расстояние до блока задач */
 }
 
 .task-form input {
@@ -84,6 +92,9 @@ main {
   border-radius: 8px;
   background: var(--bg);
   color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .task-form button {
@@ -93,15 +104,26 @@ main {
   padding: 0.7rem;
   cursor: pointer;
   transition: 0.2s;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
+  margin-top: 10px;
+  box-sizing: border-box;
 }
 
 .task-form button:hover {
   opacity: 0.8;
 }
 
-/* Список задач */
+/* Список задач: текст всегда виден, переносится */
 .task-list {
   margin-top: 1.5rem;
+  max-width: 100%;
+  /* если нет задач, всё равно держим min-height */
+  margin-bottom: 32px;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .stats {
@@ -145,6 +167,8 @@ li.done h3 {
 .info {
   flex: 1;
   min-width: 200px;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .date {
@@ -173,6 +197,47 @@ li.done h3 {
   opacity: 0.7;
 }
 
+/* Новый grid для формы и списка задач (десктоп) */
+.tasks-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 18px;
+  align-items: stretch;
+  margin-bottom: 32px;
+}
+@media (max-width: 600px) {
+  .tasks-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+/* Одинаковый размер формы и списка задач */
+.task-form,
+.task-list {
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 1rem;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: flex-start;
+}
+.task-form {
+  max-width: 340px;
+  min-height: 200px;
+  max-height: 280px;
+  /* min-height убран, теперь управляется выше */
+}
+.task-list {
+  margin-top: 0;
+  max-width: 100%;
+}
+
 /* 📱 Мобильная версия */
 @media (max-width: 600px) {
   header {
@@ -183,6 +248,13 @@ li.done h3 {
 
   main {
     padding: 1rem;
+    padding-bottom: 80px;
+  }
+
+  .task-form {
+    min-height: 280px;
+    max-height: 180px;
+    margin-bottom: 18px; /* расстояние до блока задач */
   }
 
   li {
@@ -190,7 +262,6 @@ li.done h3 {
     align-items: flex-start;
     min-height: 130px; /* базовый размер на телефоне */
   }
-
 
   .buttons {
     margin-top: 8px;

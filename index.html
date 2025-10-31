@@ -14,22 +14,23 @@
     </header>
 
     <main>
-      <section class="task-form">
-        <h2>Добавить задание</h2>
-        <input id="subjectInput" type="text" placeholder="Название предмета" />
-        <input id="descInput" type="text" placeholder="Описание задания" />
-        <button id="addTask">Добавить</button>
-      </section>
-
-      <section class="task-list">
-        <h2>Мои задания</h2>
-        <div class="stats">
-          <span id="totalTasks">Всего: 0</span>
-          <span id="doneTasks">Выполнено: 0</span>
-          <span id="pendingTasks">Осталось: 0</span>
-        </div>
-        <ul id="myTasks"></ul>
-      </section>
+      <div class="tasks-grid">
+        <section class="task-form">
+          <h2>Добавить задание</h2>
+          <input id="subjectInput" type="text" placeholder="Название предмета" />
+          <input id="descInput" type="text" placeholder="Описание задания" />
+          <button id="addTask">Добавить</button>
+        </section>
+        <section class="task-list">
+          <h2>Мои задания</h2>
+          <div class="stats">
+            <span id="totalTasks">Всего: 0</span>
+            <span id="doneTasks">Выполнено: 0</span>
+            <span id="pendingTasks">Осталось: 0</span>
+          </div>
+          <ul id="myTasks"></ul>
+        </section>
+      </div>
     </main>
 
     <footer>
