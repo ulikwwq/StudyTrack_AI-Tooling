@@ -67,6 +67,19 @@ main {
   }
 }
 
+@media (max-width: 600px) {
+  li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .buttons {
+    margin-top: 8px;
+    align-self: flex-start;
+  }
+}
+
+
 .task-form,
 .task-list {
   background: var(--card);
@@ -124,10 +137,14 @@ li {
   border-radius: 12px;
   padding: 1rem;
   margin-bottom: 12px;
+
   display: flex;
   justify-content: space-between;
+  align-items: center; /* ⬅️ ВАЖНО: центр по вертикали */
+
   gap: 10px;
 }
+
 
 li.done h3 {
   text-decoration: line-through;
@@ -148,7 +165,10 @@ li.done h3 {
 .buttons {
   display: flex;
   gap: 6px;
+  align-items: center;   /* центр иконок */
+  flex-shrink: 0;        /* не сжимается */
 }
+
 
 .buttons button {
   width: 34px;
