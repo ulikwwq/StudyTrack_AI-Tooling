@@ -15,7 +15,6 @@
 
     <main>
       <div class="tasks-grid">
-        <!-- Форма -->
         <section class="task-form">
           <h2>Добавить задание</h2>
           <input id="subjectInput" type="text" placeholder="Название предмета *" />
@@ -23,7 +22,6 @@
           <button id="addTask">Добавить</button>
         </section>
 
-        <!-- Список -->
         <section class="task-list">
           <h2>Мои задания</h2>
 
@@ -33,7 +31,7 @@
             <span id="pendingTasks">Осталось: 0</span>
           </div>
 
-          <button id="toggleSort" class="sort-btn">
+          <button id="toggleSort" class="sort-btn locked">
             🔒 Перемещение выключено
           </button>
 
@@ -68,14 +66,14 @@
     document.body.className = theme;
     themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
 
-    themeToggle.addEventListener('click', () => {
+    themeToggle.onclick = () => {
       theme = theme === 'light' ? 'dark' : 'light';
       document.body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
-    });
+    };
 
-    addTaskBtn.addEventListener('click', () => {
+    addTaskBtn.onclick = () => {
       const subject = subjectInput.value.trim();
       const desc = descInput.value.trim();
 
@@ -96,7 +94,7 @@
       saveTasks();
       subjectInput.value = '';
       descInput.value = '';
-    });
+    };
 
     function saveTasks() {
       localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -139,11 +137,7 @@
         const delBtn = document.createElement('button');
         delBtn.textContent = '🗑️';
 
-        doneBtn.onclick = () => {
-          t.done = !t.done;
-          saveTasks();
-        };
-
+        doneBtn.onclick = () => { t.done = !t.done; saveTasks(); };
         editBtn.onclick = () => {
           const newDesc = prompt('Изменить описание:', t.desc);
           if (newDesc !== null) {
@@ -152,11 +146,7 @@
             saveTasks();
           }
         };
-
-        delBtn.onclick = () => {
-          tasks.splice(index, 1);
-          saveTasks();
-        };
+        delBtn.onclick = () => { tasks.splice(index, 1); saveTasks(); };
 
         btns.append(doneBtn, editBtn, delBtn);
         li.append(info, btns);
@@ -171,7 +161,6 @@
     function enableSort() {
       sortable = Sortable.create(myTasks, {
         animation: 150,
-        disabled: false,
         onEnd(evt) {
           const moved = tasks.splice(evt.oldIndex, 1)[0];
           tasks.splice(evt.newIndex, 0, moved);
@@ -187,17 +176,21 @@
       }
     }
 
-    toggleSortBtn.addEventListener('click', () => {
+    toggleSortBtn.onclick = () => {
       sortEnabled = !sortEnabled;
 
       if (sortEnabled) {
         enableSort();
         toggleSortBtn.textContent = '🔓 Перемещение включено';
+        toggleSortBtn.classList.remove('locked');
+        toggleSortBtn.classList.add('unlocked');
       } else {
         disableSort();
         toggleSortBtn.textContent = '🔒 Перемещение выключено';
+        toggleSortBtn.classList.remove('unlocked');
+        toggleSortBtn.classList.add('locked');
       }
-    });
+    };
 
     renderTasks();
   </script>
